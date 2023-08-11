@@ -1,5 +1,5 @@
 import './App.css';
-// import Navbar from './components/Navbar';
+import Navbar from './components/Navbar';
 import TextForm from './components/TextForm';
 import About from './components/About';
 import React, { useState } from 'react';
@@ -26,38 +26,29 @@ function App() {
   const darkModeBtn = () => {
     if (mode === 'light') {
       setDarkMode('dark');
-      document.body.style.backgroundColor = 'gray';
-      showAlert('Dark Mode has been enable', 'success');
+      document.body.style.backgroundColor = 'rgba(0, 0, 0, 0.678)';
+      showAlert('Dark Mode has been enabled', 'success');
       document.title = 'TextUtils - Dark Mode';
     } else {
       setDarkMode('light');
       document.body.style.backgroundColor = 'white';
-      showAlert('Dark Mode has been enable', 'success');
+      showAlert('Light Mode has been enabled', 'success');
       document.title = 'TextUtils - Light Mode';
     }
   };
 
   return (
-    <>
-      <Router>
-        {/* <Navbar title="TextUtils" mode={mode} toogleMode={darkModeBtn} /> */}
-        <Alert alert={alert} />
-        <div className='container my-3'>
-          <Routes>
-            <Route exact path="/about" element={
-              <About />
-            } />
-            <Route exact path="/" element={
-              <TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode} />
-            } />
-          </Routes>
-        </div>
-      </Router>
-    </>
+    <Router>
+      <Navbar title="TextUtils" mode={mode} toggleMode={darkModeBtn} />
+      <Alert alert={alert} />
+      <div className='container my-3'>
+        <Routes>
+          <Route path="/about" element={<About mode={mode} />} />
+          <Route path="/" element={<TextForm showAlert={showAlert} heading="Enter the text to analyze below" mode={mode} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
 export default App;
-
-
-

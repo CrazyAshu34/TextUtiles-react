@@ -48,6 +48,7 @@ export default function TextForm(props) {
         const mytext = document.getElementById('mybox');
         mytext.select();
         navigator.clipboard.writeText(mytext.value);
+        document.getSelection().removeAllRanges();
         props.showAlert("Copied to clipboard!", "success");
 
     };
@@ -63,22 +64,22 @@ export default function TextForm(props) {
                         value={text}
                         id="mybox"
                         rows="8"
-                        style={{ backgroundColor: props.mode === 'dark' ? 'gray' : 'white', color: props.mode === 'dark' ? 'white' : 'black' }}></textarea>
+                        style={{ backgroundColor: props.mode === 'dark' ? 'rgba(0, 0, 0, 0.181)' : 'white', color: props.mode === 'dark' ? 'white' : 'black' }}></textarea>
                 </div>
-                <button onClick={upperCaseFun} className="btn btn-primary mx-0">UpperCase</button>
-                <button onClick={lowerCaseFun} className="btn btn-primary mx-1">lowerCase</button>
-                <button onClick={removeExtraSpace} className="btn btn-primary mx-1">removeExtraSpace</button>
-                <button onClick={clearTextFun} className="btn btn-primary mx-1">Clear</button>
-                <button onClick={sentenceCaseFun} className="btn btn-primary mx-1">sentenceCase</button>
-                <button onClick={copyText} className="btn btn-primary mx-1">copy-text</button>
+                <button disabled={text.length === 0} onClick={upperCaseFun} className="btn btn-primary mx-0 my-1">UpperCase</button>
+                <button disabled={text.length === 0} onClick={lowerCaseFun} className="btn btn-primary mx-1 my-1">lowerCase</button>
+                <button disabled={text.length === 0} onClick={removeExtraSpace} className="btn btn-primary mx-1 my-1">removeExtraSpace</button>
+                <button disabled={text.length === 0} onClick={clearTextFun} className="btn btn-primary mx-1 my-1">Clear</button>
+                <button disabled={text.length === 0} onClick={sentenceCaseFun} className="btn btn-primary mx-1 my-1">sentenceCase</button>
+                <button disabled={text.length === 0} onClick={copyText} className="btn btn-primary mx-1 my-1">copy-text</button>
             </div>
 
-            <div className='container my-3' style={{ color: props.mode === 'black' ? 'white' : 'black' }}>
+            <div className='container my-3' style={{ color: props.mode === 'dark' ? 'white' : 'black' }}>
                 <h4>Your Text Summary</h4>
-                <p>word: {text.split(' ').length} characters: {text.length}</p>
-                <p>You can read this paragraph in: {0.008 * text.split(' ').length} Minutes</p>
+                <p>word: {text.split(' ').filter((e) => { return e.length !== 0 }).length} characters: {text.length}</p>
+                <p>You can read this paragraph in: {0.008 * text.split(' ').filter((e) => { return e.length !== 0 }).length} Minutes</p>
                 <h2><b>preview</b></h2>
-                <p><i>{text.length > 0 ? text : 'Enter Something to preview & see the Mazic '} </i></p>
+                <p><i>{text.length > 0 ? text : 'Nothing to preview :🦟'} </i></p>
             </div>
         </>
     );
